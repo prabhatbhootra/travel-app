@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Please enter a new journey</title>
+</head>
+<body>
+    <div class="container">
+        <img src="../static/logo.png" alt="LOGO" class="logo">
+        {% if message %}
+        <p class="message">{{ message | safe }}</p>
+        {% endif %}
+        <form action="/submit" method="POST">
+            <div class="form-group">
+                <h3>Title</h3>
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="Title of journey to be created"
+                />
+            </div>
+            <div class="form-group">
+                <h3>Visited on</h3>
+                <input
+                    type="date"
+                    name="visitedAt"
+                    value="2018-01-01"
+                />
+            </div>
+            <div class="form-group">
+                <h3>Please rate your trip</h3>
+                <input type="radio" name="rating" value="1" />
+                <input type="radio" name="rating" value="2" />
+                <input type="radio" name="rating" value="3" />
+                <input type="radio" name="rating" value="4" />
+                <input type="radio" name="rating" value="5" />
+                <input type="radio" name="rating" value="6" />
+                <input type="radio" name="rating" value="7" />
+                <input type="radio" name="rating" value="8" />
+                <input type="radio" name="rating" value="9" />
+                <input type="radio" name="rating" value="10" checked/>
+            </div>
+            <div class="form-group">
+                <h3>Comments about your journey</h3>
+                <textarea 
+                    name="comments"
+                    id=""
+                    cols="30"
+                    rows="10"
+                    placeholder="What did you like/not like?"
+                >
+                </textarea>
+            </div>
+            <input type="submit" value="Submit" class="btn" />
+        </form>
+        <form action="/journeys" method="GET">
+            <input type="submit" value="Show all Journeys" class="btn" />
+            {% if output_data %}
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Vistited On</th>
+                    <th>Rating</th>
+                    <th>Comments</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for row in output_data %}
+                        <tr>
+                            <td>{{row.title}}</td>
+                            <td>{{row.visitedAt}}</td>
+                            <td>{{row.rating}}</td>
+                            <td>{{row.comments}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
